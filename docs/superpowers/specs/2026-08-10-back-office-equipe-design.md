@@ -88,8 +88,9 @@ s'auto-assigner sur les deux étapes et les enchaîner.
 - **Frontend** : Next.js, hébergé sur Vercel, domaine wildcard.
   - Domaine racine : zone publique (hors scope de ce sous-projet — reste un
     placeholder minimal) + `/login` (connexion via Supabase Auth) + page
-    d'accueil connectée listant les équipes du membre avec un bouton
-    "Dashboard `<nom de la team>`" par équipe.
+    d'accueil connectée listant les équipes du membre, chacune représentée
+    par un bouton-avatar affichant le logo de l'équipe (tooltip avec le nom
+    au survol) menant à son back-office.
   - Sous-domaine `<team>.<domaine>` : back-office de l'équipe.
   - Un middleware Next.js route selon le header `Host` (sous-domaine présent
     → back-office ; racine → zone publique).
@@ -121,10 +122,11 @@ s'auto-assigner sur les deux étapes et les enchaîner.
 
 ## Modèle de données
 
-**Team** — `id`, `name`, `slug` (sous-domaine), `discord_webhook_url`,
-`created_at`
+**Team** — `id`, `name`, `slug` (sous-domaine), `logo` (réf. Storage),
+`discord_webhook_url`, `created_at`
 
 **TeamMembership** — lie un utilisateur Supabase (`user_id`) à une `Team` :
+
 - `is_lead` (booléen)
 - `pipeline_roles` (sous-ensemble de `{clean, trad, edit, check}`)
 
@@ -141,6 +143,7 @@ s'auto-assigner sur les deux étapes et les enchaîner.
 
 **PlancheStep** — une ligne par étape (`clean`, `trad`, `edit`, `check`) et
 par planche :
+
 - `status` (`locked` / `available` / `in_progress` / `done` / `rework`)
 - `assigned_to` (nullable, auto-assignation)
 - `deliverable` (image pour clean/edit, texte pour trad, vide pour check)
@@ -157,8 +160,8 @@ chapitre passent à `done`.
 ## Pages principales (frontend)
 
 - `/login` (domaine racine) — connexion via Supabase Auth
-- `/` (domaine racine, connecté) — liste des équipes du membre, bouton
-  "Dashboard `<nom de la team>`" par équipe
+- `/` (domaine racine, connecté) — liste des équipes du membre, chacune
+  représentée par un bouton-avatar (logo de l'équipe, tooltip avec le nom)
 - `/invite/[token]` — acceptation d'invitation
 - `/dashboard` (`<team>.domaine`) — planches disponibles par étape,
   filtrable selon les `pipeline_roles` du membre connecté
@@ -168,8 +171,8 @@ chapitre passent à `done`.
 - `/chapters/[id]/planches/[num]` — livrable de l'étape active, action
   "terminer l'étape", commentaire de rework si check échoue
 - `/team/members` — invitations et rôles pipeline (lead uniquement)
-- `/team/settings` — accès lead uniquement : nom/slug de l'équipe, URL
-  webhook Discord
+- `/team/settings` — accès lead uniquement : nom/slug de l'équipe, logo
+  (utilisé comme avatar de l'équipe), URL webhook Discord
 
 ## Gestion des erreurs
 
