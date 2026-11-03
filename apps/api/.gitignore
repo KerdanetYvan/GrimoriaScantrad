@@ -1,0 +1,9 @@
+# Cache Python regénéré automatiquement, ça ne sert à rien de le versionner
+__pycache__/
+.venv/
+
+# Cache des tests unitaires fait via pytest, il ne sert à rien de le versionner non plus
+.pytest_cache/
+
+# Variables d'environnements à ne surtout pas versionner, car elles contiennent des secrets
+.env
