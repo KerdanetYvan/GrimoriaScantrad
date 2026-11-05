@@ -44,16 +44,16 @@ python -m venv .venv
 Create `backend/requirements.txt`:
 
 ```text
-Django==5.2.1
-djangorestframework==3.15.2
-psycopg[binary]==3.2.3
-django-environ==0.11.2
-PyJWT==2.9.0
-celery==5.4.0
-redis==5.0.8
-requests==2.32.3
-pytest==8.3.3
-pytest-django==4.9.0
+Django==5.2.19
+djangorestframework==3.18.3
+psycopg[binary]==3.3.7
+django-environ==0.14.0
+PyJWT==2.15.1
+celery==5.6.3
+redis==8.1.0
+requests==2.34.2
+pytest==9.2.0
+pytest-django==4.14.0
 ```
 
 ```bash
