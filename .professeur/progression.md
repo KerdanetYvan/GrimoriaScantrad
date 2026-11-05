@@ -98,9 +98,9 @@
 
 ### Upstream / branche de suivi (Git)
 - Domaine : général
-- Statut : Vu
-- Mis à jour : 2026-11-04
-- Indice : a rencontré « no upstream branch », a poussé avec `-u` (commande suggérée par Git), puis `git push` seul au commit suivant
+- Statut : Confirmé
+- Mis à jour : 2026-11-05
+- Indice : a rencontré « no upstream branch », a poussé avec `-u` (commande suggérée par Git), puis `git push` seul au commit suivant ; 2026-11-05 : a composé seul `git push -u origin ci/add-api-tests` avec la bonne raison
 
 ### Utilité d'une PR en solo (Git)
 - Domaine : général
@@ -113,6 +113,18 @@
 - Statut : Vu
 - Mis à jour : 2026-11-05
 - Indice : bloqué par un switch (modifs locales) ; a proposé seul `git stash` (avec un `.` en trop) ; `pop` donné après 2 indices ; a choisi `apply` sans saisir la différence, puis après l'analogie de l'étagère a prédit juste l'effet sur `git stash list` (apply garde, pop vide) ; a vérifié puis nettoyé avec `drop && list` (sous-commandes nommées par moi)
+
+### Workflow GitHub Actions : on, paths, jobs, steps, uses/run, defaults (GitHub Actions)
+- Domaine : spécifique
+- Statut : Vu
+- Mis à jour : 2026-11-05
+- Indice : a listé seul les étapes (oubli checkout + deps) ; a écrit api-ci.yml pas à pas avec clés données en indice ; erreurs : tirets à la racine, `paths` en chaîne, `working_directory` (underscore, niveau run manquant, valeur `cd ...`), nom d'étape checkout faux, `pytest core/tests` ; croyait qu'une PR utilisait l'ancien workflow ; a bien compris steps séquentiels vs jobs parallèles
+
+### YAML (général)
+- Domaine : général
+- Statut : Vu
+- Mis à jour : 2026-11-05
+- Indice : déjà croisé (docker-compose) sans rien retenir ; mapping vs liste confondus au début puis corrigés seul ; piège des nombres non quotés (3.12) expliqué
 
 ### Bases de Git : commit, push, pull (Git)
 - Domaine : général
