@@ -1,0 +1,25 @@
+name: API Django CI
+on:
+    pull_request:
+        paths:
+            - apps/api/**
+            - .github/workflows/api-ci.yml
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: apps/api
+        steps:
+            - name: Récupération du code du projet
+              uses: actions/checkout@v7
+            - name: Installation de Python 3.12
+              uses: actions/setup-python@v7
+              with:
+                python-version: '3.12'
+            - name: Installation des dépendances
+              run: pip install -r requirements.txt
+            - name: Check de la cohérence de l'API
+              run: python manage.py check
+            - name: Exécution de Pytest
+              run: pytest
