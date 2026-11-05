@@ -46,7 +46,13 @@
 - Domaine : général
 - Statut : Vu
 - Mis à jour : 2026-11-03
-- Indice : a créé `feat/backend-scaffold` avec la commande fournie ; expliqué switch -c, point de départ, fichiers non commités
+- Indice : a créé `feat/backend-scaffold` avec la commande fournie ; expliqué switch -c, point de départ, fichiers non commités ; après merge, a trouvé seul `-d` via `git branch -h` et expliqué juste -d vs -D, suppression locale OK ; suppression distante `git push -d origin <branche>` après 3 essais (ordre des arguments, origin/x pris pour un seul mot) ; notion de ref expliquée
+
+### Lire la synopsis d'une aide (`-h`, crochets, chevrons) (général)
+- Domaine : général
+- Statut : Vu
+- Mis à jour : 2026-11-05
+- Indice : bon réflexe de lire `-h` seul (branch, push) ; a tapé les crochets littéralement et mis le nom du projet au lieu de `origin` ; convention [] / <> et découpage en arguments expliqués
 
 ### Organisation en monorepo (général)
 - Domaine : général
@@ -62,9 +68,9 @@
 
 ### Conventional Commits (Git)
 - Domaine : général
-- Statut : Confirmé
+- Statut : Infirmé
 - Mis à jour : 2026-11-04
-- Indice : a écrit les 5 messages du découpage scaffold/pytest/health ; tendance à mettre `feat` sur de la mise en place et une majuscule, corrigé après explication (changelog/semver)
+- Indice : format maîtrisé (5 messages du découpage), mais choix du type fragile : `feat` sur de la mise en place, puis `fix` puis `build` pour un renommage ; a choisi `refactor` après le tableau des types ; 2026-11-05 : ne se souvenait plus de docs vs chore, fiche mémo créée ; nom de branche CI trouvé en 5 essais (`:` interdit, feat→ci, trop vague, parenthèses) → `ci/add-api-tests`
 
 ### Écrire un test avec pytest (pytest)
 - Domaine : spécifique
@@ -90,8 +96,26 @@
 - Mis à jour : 2026-11-04
 - Indice : expliqué (lire de bas en haut, ligne `E` + fichier:ligne) sur l'ImportError de grimoria/urls.py
 
+### Upstream / branche de suivi (Git)
+- Domaine : général
+- Statut : Vu
+- Mis à jour : 2026-11-04
+- Indice : a rencontré « no upstream branch », a poussé avec `-u` (commande suggérée par Git), puis `git push` seul au commit suivant
+
+### Utilité d'une PR en solo (Git)
+- Domaine : général
+- Statut : Confirmé
+- Mis à jour : 2026-11-04
+- Indice : a expliqué seul : point de contrôle CI avant merge + archive à relire plus tard
+
+### Stash (Git)
+- Domaine : général
+- Statut : Vu
+- Mis à jour : 2026-11-05
+- Indice : bloqué par un switch (modifs locales) ; a proposé seul `git stash` (avec un `.` en trop) ; `pop` donné après 2 indices ; a choisi `apply` sans saisir la différence, puis après l'analogie de l'étagère a prédit juste l'effet sur `git stash list` (apply garde, pop vide) ; a vérifié puis nettoyé avec `drop && list` (sous-commandes nommées par moi)
+
 ### Bases de Git : commit, push, pull (Git)
 - Domaine : général
 - Statut : Déclaré
-- Mis à jour : 2026-11-03
-- Indice : déclaré à la calibration
+- Mis à jour : 2026-11-05
+- Indice : déclaré à la calibration ; après le merge de la PR, a trouvé seul `git switch master && git pull` avec la bonne raison (master local en retard sur origin)
