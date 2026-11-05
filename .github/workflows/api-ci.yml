@@ -1,15 +1,28 @@
 name: API Django CI
-on:
-    pull_request:
-        paths:
-            - apps/api/**
-            - .github/workflows/api-ci.yml
+on: pull_request
 jobs:
+    detect_changes:
+        runs-on: ubuntu-latest
+        permissions:
+            pull-requests: read
+        steps:
+            - name: Filtrage des changements
+              uses: dorny/paths-filter@v4
+              id: filter
+              with:
+                filters: |
+                    api:
+                        - apps/api/**
+                        - .github/workflows/api-ci.yml
+        outputs:
+            api: ${{ steps.filter.outputs.api }}
     test:
         runs-on: ubuntu-latest
         defaults:
             run:
                 working-directory: apps/api
+        needs: detect_changes
+        if: needs.detect_changes.outputs.api == 'true'
         steps:
             - name: Récupération du code du projet
               uses: actions/checkout@v7
