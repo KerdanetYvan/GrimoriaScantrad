@@ -44,9 +44,9 @@
 
 ### Branches (Git)
 - Domaine : général
-- Statut : Vu
-- Mis à jour : 2026-11-03
-- Indice : a créé `feat/backend-scaffold` avec la commande fournie ; expliqué switch -c, point de départ, fichiers non commités ; après merge, a trouvé seul `-d` via `git branch -h` et expliqué juste -d vs -D, suppression locale OK ; suppression distante `git push -d origin <branche>` après 3 essais (ordre des arguments, origin/x pris pour un seul mot) ; notion de ref expliquée
+- Statut : Confirmé
+- Mis à jour : 2026-11-05
+- Indice : a créé `feat/backend-scaffold` avec la commande fournie ; expliqué switch -c, point de départ, fichiers non commités ; après merge, a trouvé seul `-d` via `git branch -h` et expliqué juste -d vs -D, suppression locale OK ; suppression distante `git push -d origin <branche>` après 3 essais (ordre des arguments, origin/x pris pour un seul mot) ; notion de ref expliquée ; 2e cycle : a composé seul `git switch -c ci/add-api-tests`, puis `git branch -d ... && git push -d origin ...` après merge
 
 ### Lire la synopsis d'une aide (`-h`, crochets, chevrons) (général)
 - Domaine : général
