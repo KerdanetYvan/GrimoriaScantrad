@@ -126,6 +126,18 @@
 - Mis à jour : 2026-11-05
 - Indice : déjà croisé (docker-compose) sans rien retenir ; mapping vs liste confondus au début puis corrigés seul ; piège des nombres non quotés (3.12) expliqué
 
+### Fins de ligne et .gitattributes (Git)
+- Domaine : général
+- Statut : Vu
+- Mis à jour : 2026-11-05
+- Indice : ne savait pas ce qu'étaient LF/CRLF ; a choisi seul LF avec la bonne raison (serveurs Linux, `\r` dans les scripts) ; a écrit `* text=auto eol=lf` après 2 erreurs (motif manquant, `eof`) ; renormalize lancé (aucun fichier changé)
+
+### Motifs de fichiers (glob : *, **) (général)
+- Domaine : général
+- Statut : Vu
+- Mis à jour : 2026-11-05
+- Indice : utilisé `apps/api/**` sans le savoir ; `*`, `**`, motif sans `/` expliqués
+
 ### Bases de Git : commit, push, pull (Git)
 - Domaine : général
 - Statut : Déclaré
