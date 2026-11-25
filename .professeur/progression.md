@@ -70,7 +70,7 @@
 - Domaine : général
 - Statut : Infirmé
 - Mis à jour : 2026-11-04
-- Indice : format maîtrisé (5 messages du découpage), mais choix du type fragile : `feat` sur de la mise en place, puis `fix` puis `build` pour un renommage ; a choisi `refactor` après le tableau des types ; 2026-11-05 : ne se souvenait plus de docs vs chore, fiche mémo créée ; nom de branche CI trouvé en 5 essais (`:` interdit, feat→ci, trop vague, parenthèses) → `ci/add-api-tests`
+- Indice : format maîtrisé (5 messages du découpage), mais choix du type fragile : `feat` sur de la mise en place, puis `fix` puis `build` pour un renommage ; a choisi `refactor` après le tableau des types ; 2026-11-05 : ne se souvenait plus de docs vs chore, fiche mémo créée ; nom de branche CI trouvé en 5 essais (`:` interdit, feat→ci, trop vague, parenthèses) → `ci/add-api-tests` ; 2026-11-25 : premier commit avec corps (`-m` titre + `-m` corps, guillemets simples), corps rédigé seul puis corrigé (anglais francisé, oubli d'un changement) ; tend encore à décrire le mécanisme plutôt que le comportement
 
 ### Écrire un test avec pytest (pytest)
 - Domaine : spécifique
@@ -119,6 +119,18 @@
 - Statut : Vu
 - Mis à jour : 2026-11-05
 - Indice : a listé seul les étapes (oubli checkout + deps) ; a écrit api-ci.yml pas à pas avec clés données en indice ; erreurs : tirets à la racine, `paths` en chaîne, `working_directory` (underscore, niveau run manquant, valeur `cd ...`), nom d'étape checkout faux, `pytest core/tests` ; croyait qu'une PR utilisait l'ancien workflow ; a bien compris steps séquentiels vs jobs parallèles
+
+### Jobs dépendants : needs, outputs, if, permissions (GitHub Actions)
+- Domaine : spécifique
+- Statut : Vu
+- Mis à jour : 2026-11-05
+- Indice : a deviné seul que les jobs doivent partager une info via needs + if ; a écrit outputs (`${{ steps.filter.outputs.api }}`) et le `if` correct après explication des 3 maillons ; `permissions` donné en forme générale, a choisi `read` ; CI verte (detect 6s, test 15s)
+
+### Protection de branche : rulesets (GitHub)
+- Domaine : spécifique
+- Statut : Vu
+- Mis à jour : 2026-11-05
+- Indice : a trouvé seul les 2 règles clés (pas de push direct, pas de merge rouge) ; a configuré le ruleset (oubli de la cible) ; a trouvé seul que le filtre `paths` + check requis bloquerait les PR hors API ; a choisi la solution propre (job de détection)
 
 ### YAML (général)
 - Domaine : général
