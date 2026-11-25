@@ -25,6 +25,21 @@ jobs:
         if: needs.detect_changes.outputs.api == 'true'
         env:
             SECRET_KEY: ci-only-not-secret
+            DATABASE_URL: postgres://grimoria:grimoria@localhost:5432/postgres_grimoria
+        services:
+            postgres_grimoria:
+                image: postgres:16
+                env:
+                    POSTGRES_USER: grimoria
+                    POSTGRES_PASSWORD: grimoria
+                    POSTGRES_DB: postgres_grimoria
+                ports:
+                    - "5432:5432"
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
         steps:
             - name: Récupération du code du projet
               uses: actions/checkout@v7
