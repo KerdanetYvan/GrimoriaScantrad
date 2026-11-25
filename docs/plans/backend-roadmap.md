@@ -11,7 +11,7 @@ prouve qu'elle est **finie**, sans imposer le code : c'est à construire.
 - But : projet Django dans `apps/api`, pytest, endpoint de santé, CI.
 - Fini : `GET /api/health/` répond `{"status": "ok"}`, la CI est verte.
 
-## 2. Configuration et base de données
+## 2. Configuration et base de données ✅
 
 - But : sortir les secrets du code (`.env` avec django-environ), brancher
   Postgres, poser le squelette de Celery.
