@@ -23,6 +23,8 @@ jobs:
                 working-directory: apps/api
         needs: detect_changes
         if: needs.detect_changes.outputs.api == 'true'
+        env:
+            SECRET_KEY: ci-only-not-secret
         steps:
             - name: Récupération du code du projet
               uses: actions/checkout@v7
