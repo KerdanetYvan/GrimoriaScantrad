@@ -11,3 +11,4 @@
 ## Préférences
 - Veut monter en compétence sur Git : workflows, CI/CD, PR en solo.
 - Exemples et pseudo-code : moins détaillés, ne pas mâcher le travail — « les erreurs font apprendre aussi ». Mais expliquer davantage quand il dit être perdu (ex. Django en réapprentissage).
+- Dyslexique : les longs textes sont pénibles à lire. Messages courts, une question à la fois ; pour relire un document, le lire à sa place et lui poser des questions plutôt que lui demander de le parcourir.

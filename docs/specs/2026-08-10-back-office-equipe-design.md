@@ -1,7 +1,8 @@
 # Grimoria — Back-office équipe (pipeline de scantrad)
 
 Date : 2026-08-10
-Statut : En cours de revue
+Mise à jour : 2026-11-25
+Statut : Relecture finie
 
 ## Contexte
 
@@ -28,12 +29,17 @@ cycles brainstorming → plan → implémentation.
   planche, à travers un pipeline de production (raw → clean/trad → edit →
   check).
 - Permettre un travail flexible : un membre peut s'auto-assigner sur une ou
-  plusieurs étapes selon ses compétences, planche par planche.
+  plusieurs étapes d'un chapitre selon ses compétences. L'avancement reste
+  suivi planche par planche.
 - Fournir un point d'entrée unique (lien d'invitation) pour rejoindre
   l'équipe et accéder au back-office.
 - Notifier l'équipe des événements clés via un webhook Discord simple.
-- Produire un export des planches finales une fois un chapitre entièrement
-  validé.
+- Permettre à un lead de publier un chapitre sur Grimoria, à tout moment. Si
+  le chapitre n'est pas entièrement checké, la publication est marquée
+  incomplète et le lecteur en est prévenu. Une nouvelle publication met à jour
+  le contenu et le statut.
+- Produire, à la demande d'un lead, un export zip des planches pour publier
+  sur d'autres plateformes, avec les mêmes règles.
 
 ## Non-objectifs (hors scope de ce sous-projet)
 
@@ -57,35 +63,38 @@ Dépendances entre étapes :
 
 - **clean** et **trad** peuvent démarrer dès que le raw existe, en parallèle.
 - **edit** ne peut démarrer que lorsque clean ET trad sont tous les deux
-  `done` sur la planche.
+  `done` sur la planche. Exception : si le même membre est assigné à trad et à edit, edit démarre dès que clean est done. Il traduit directement sur l'image, et trad passe à done en même temps qu'edit, sans livrable séparé.
 - **check** ne peut démarrer que lorsque edit est `done`.
 - Si **check** échoue, la planche est renvoyée vers l'étape concernée
   (souvent edit ou trad) avec un commentaire explicatif ; l'étape repasse en
   statut `rework` et les étapes suivantes sont réinitialisées.
 
 Un membre peut avoir plusieurs "rôles pipeline" (compétences) et choisir,
-planche par planche, sur quelle(s) étape(s) il s'auto-assigne — il n'y a pas
-de workflow d'attribution centralisée par un lead. La validation d'une étape
+chapitre par chapitre, sur quelle(s) étape(s) il s'auto-assigne — il n'y a pas
+de workflow d'attribution centralisée par un lead. Une étape d'un chapitre n'a
+qu'un seul membre assigné, mais l'avancement est suivi planche par planche :
+edit peut commencer la planche 3 dès qu'elle est cleanée et traduite. La validation d'une étape
 est auto-déclarée par le membre qui l'exécute (pas de validation par un
 tiers avant déblocage de l'étape suivante).
 
 Le livrable de l'étape **trad** est un texte simple (script de traduction par
 planche, sans positionnement précis) — distinct du livrable de **edit** (image
 finale avec texte intégré), même si en pratique un même membre peut
-s'auto-assigner sur les deux étapes et les enchaîner.
+s'auto-assigner sur les deux étapes et les faire en une seule fois (voir l'exception ci-dessus).
 
 ## Rôles et permissions
 
 - **Lead** : peut créer une série/un chapitre, uploader les raws initiaux,
   générer des liens d'invitation, gérer les membres et leurs rôles pipeline,
-  accéder à `/team/settings`.
+  publier et exporter un chapitre, accéder à `/team/settings`.
 - **Membre** : dispose d'un sous-ensemble de rôles pipeline (`clean`, `trad`,
   `edit`, `check`) déterminant sur quelles étapes il peut s'auto-assigner.
   Une équipe peut avoir plusieurs leads.
+- Plusieurs membres peuvent avoir le même rôle pipeline.
 
 ## Architecture
 
-- **Frontend** : Next.js, hébergé sur Vercel, domaine wildcard.
+- **Frontend** : Next.js, hébergement à définir, domaine wildcard.
   - Domaine racine : zone publique (hors scope de ce sous-projet — reste un
     placeholder minimal) + `/login` (connexion via Supabase Auth) + page
     d'accueil connectée listant les équipes du membre, chacune représentée
@@ -97,13 +106,13 @@ s'auto-assigner sur les deux étapes et les enchaîner.
   - Le cookie de session Supabase est scopé sur le domaine parent
     (`.domaine`) pour rester valide en passant du domaine racine vers un
     sous-domaine, sans reconnexion.
-- **Backend** : Django + Django REST Framework, hébergé sur OVH. Porte toute
+- **Backend** : Django + Django REST Framework, hébergé sur un VPS. Porte toute
   la logique métier : pipeline, permissions par rôle, invitations, export,
   déclenchement des notifications.
   - Vérifie le JWT Supabase à chaque requête (JWKS/secret Supabase) pour
     identifier l'utilisateur, puis applique ses propres règles de permission
     (appartenance à la team, rôle lead, rôles pipeline).
-- **Supabase self-hosted (sur OVH)** :
+- **Supabase self-hosted** :
   - *Auth (GoTrue)* — gère comptes et sessions, émet les JWT. Source de
     vérité pour l'identité des utilisateurs.
   - *Postgres* — instance unique : schéma `auth` géré par Supabase pour les
@@ -136,17 +145,25 @@ s'auto-assigner sur les deux étapes et les enchaîner.
 
 **Series** — `id`, `team_id`, `name`, `slug`
 
-**Chapter** — `id`, `series_id`, `number`, `title`,
-`status` (`in_progress` / `ready` / `exported`), `created_by`, `created_at`
+**Chapter** — `id`, `series_id`, `number`, `title`, `created_by`,
+`created_at`, et deux statuts indépendants :
+
+- `status` : avancement de la production (`in_progress` / `ready`, `ready`
+  quand toutes les `PlancheStep(check)` sont `done`)
+- `publication_status` : publication sur Grimoria (`unpublished` / `partial` /
+  `complete`), `published_at`
 
 **Planche** — `id`, `chapter_id`, `page_number`, `raw_image` (réf. Storage)
+
+**ChapterStep** — une ligne par étape et par chapitre : `chapter_id`, `step`
+(`clean` / `trad` / `edit` / `check`), `assigned_to` (nullable,
+auto-assignation)
 
 **PlancheStep** — une ligne par étape (`clean`, `trad`, `edit`, `check`) et
 par planche :
 
 - `status` (`locked` / `available` / `in_progress` / `done` / `rework`)
-- `assigned_to` (nullable, auto-assignation)
-- `deliverable` (image pour clean/edit, texte pour trad, vide pour check)
+- `deliverable` (image pour clean/edit, texte pour trad, sauf si trad est faite avec edit, vide pour check)
 - `rework_comment` (rempli si un check échoue et renvoie vers cette étape)
 
 La logique de dépendance entre étapes (voir Workflow) est portée par Django
@@ -154,10 +171,21 @@ et recalculée à chaque changement de statut — elle n'est pas encodée dans l
 schéma lui-même.
 
 **Export** — `id`, `chapter_id`, `generated_at`, `file_url` (zip dans
-Storage). Généré automatiquement quand toutes les `PlancheStep(check)` d'un
-chapitre passent à `done`.
+Storage), `is_complete`. Généré à la demande d'un lead, à tout moment.
+
+Règles communes à la publication et à l'export :
+
+- seules les planches dont l'étape edit est `done` sont incluses ;
+- si le chapitre n'est pas `ready`, un avertissement prévient le lead avant de
+  valider, et le résultat est marqué incomplet (`partial` /
+  `is_complete = false`) ;
+- une nouvelle publication ou un nouvel export remplace le précédent, et passe
+  en complet si le chapitre est `ready`.
 
 ## Pages principales (frontend)
+
+> Liste provisoire, à retravailler lors d'un brainstorming UX dédié
+> (parcours par rôle, notamment le dashboard avec l'assignation par chapitre).
 
 - `/login` (domaine racine) — connexion via Supabase Auth
 - `/` (domaine racine, connecté) — liste des équipes du membre, chacune
@@ -167,7 +195,8 @@ chapitre passent à `done`.
   filtrable selon les `pipeline_roles` du membre connecté
 - `/series` et `/series/[slug]/chapters/new` — gestion des séries, création
   de chapitre + upload des raws (lead uniquement)
-- `/chapters/[id]` — liste des planches d'un chapitre avec statut par étape
+- `/chapters/[id]` — liste des planches d'un chapitre avec statut par étape,
+  actions "publier" et "exporter" (lead uniquement)
 - `/chapters/[id]/planches/[num]` — livrable de l'étape active, action
   "terminer l'étape", commentaire de rework si check échoue
 - `/team/members` — invitations et rôles pipeline (lead uniquement)
@@ -186,9 +215,8 @@ chapitre passent à `done`.
   par un non-lead → 403.
 - Token d'invitation expiré ou déjà utilisé → message explicite, le lead
   peut en regénérer un.
-- Génération de l'export échoue (ex. image manquante) → le chapitre reste en
-  `ready` (pas `exported`), erreur loggée et consultable par le lead, retry
-  possible.
+- Génération de l'export échoue (ex. image manquante) → l'export précédent
+  reste disponible, erreur loggée et consultable par le lead, retry possible.
 - Webhook Discord indisponible (URL invalide, channel supprimé) → échec
   loggé côté Django, best-effort via Celery avec retry limité, ne bloque
   jamais le pipeline.
@@ -210,6 +238,6 @@ chapitre passent à `done`.
 
 - Nom de domaine définitif non encore choisi (ce document utilise
   `<team>.domaine` comme placeholder).
-- Le dossier de travail local s'appelle encore `ArcheologueScantrad` — un
-  renommage en `Grimoria` est prévu mais n'a pas pu être effectué depuis la
-  session en cours (verrou du répertoire de travail) ; à faire manuellement.
+- Règles d'assignation à valider avec les retours de l'équipe en conditions
+  réelles.
+- Pages et parcours du frontend à définir lors d'un brainstorming UX.
