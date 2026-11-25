@@ -46,7 +46,7 @@
 - Domaine : général
 - Statut : Vu
 - Mis à jour : 2026-11-25
-- Indice : a créé `feat/backend-scaffold` avec la commande fournie ; expliqué switch -c, point de départ, fichiers non commités ; après merge, a trouvé seul `-d` via `git branch -h` et expliqué juste -d vs -D, suppression locale OK ; suppression distante `git push -d origin <branche>` après 3 essais (ordre des arguments, origin/x pris pour un seul mot) ; notion de ref expliquée ; 2e cycle : a composé seul `git switch -c ci/add-api-tests`, puis `git branch -d ... && git push -d origin ...` après merge ; 2026-11-25 (après 3 semaines de pause) : avait oublié `-u` et les deux commandes de suppression → redescendu à Vu
+- Indice : a créé `feat/backend-scaffold` avec la commande fournie ; expliqué switch -c, point de départ, fichiers non commités ; après merge, a trouvé seul `-d` via `git branch -h` et expliqué juste -d vs -D, suppression locale OK ; suppression distante `git push -d origin <branche>` après 3 essais (ordre des arguments, origin/x pris pour un seul mot) ; notion de ref expliquée ; 2e cycle : a composé seul `git switch -c ci/add-api-tests`, puis `git branch -d ... && git push -d origin ...` après merge ; 2026-11-25 (après 3 semaines de pause) : avait oublié `-u` et les deux commandes de suppression → redescendu à Vu ; même jour, PR suivante : a enchaîné seul `switch master && pull && branch -d && push -d origin` (fiche cycle de vie dispo)
 
 ### Lire la synopsis d'une aide (`-h`, crochets, chevrons) (général)
 - Domaine : général
@@ -149,6 +149,36 @@
 - Statut : Vu
 - Mis à jour : 2026-11-05
 - Indice : utilisé `apps/api/**` sans le savoir ; `*`, `**`, motif sans `/` expliqués
+
+### Secrets et variables d'environnement (django-environ) (Django)
+- Domaine : spécifique
+- Statut : Vu
+- Mis à jour : 2026-11-25
+- Indice : a su pourquoi la SECRET_KEY ne doit pas être dans le code ; a écrit seul la lecture via django-environ (env, read_env, DEBUG en bool) depuis la doc ; .env.example compris ; a anticipé seul que la CI casserait sans les variables
+
+### Substitution de commande `$(...)` (shell)
+- Domaine : général
+- Statut : Vu
+- Mis à jour : 2026-11-25
+- Indice : a voulu écrire la clé sans l'afficher (bon réflexe) ; a inversé les couches echo/python, commande complète donnée
+
+### Docker Compose : services, ports, volumes (Docker)
+- Domaine : spécifique
+- Statut : Vu
+- Mis à jour : 2026-11-25
+- Indice : ne se souvenait plus de la structure (générée par IA avant) ; a rempli le squelette (erreurs : DATABASE_URL dans le conteneur, port 5176, chemin du volume) ; a compris le conflit avec le Postgres Windows sur 5432 ; a ajouté Redis seul
+
+### Celery et Redis (broker, worker) (Celery)
+- Domaine : spécifique
+- Statut : Vu
+- Mis à jour : 2026-11-25
+- Indice : ne comprenait pas Redis ; analogie du restaurant ; croyait Redis bloqué en cas de panne Discord ; celery.py recopié de la doc puis expliqué ligne par ligne ; worker lancé avec succès
+
+### Service containers et health check (GitHub Actions)
+- Domaine : spécifique
+- Statut : Vu
+- Mis à jour : 2026-11-25
+- Indice : a ajouté un service Postgres à la CI (pensait à une step) ; health check repris de la doc GitHub ; a compris qu'un service Redis était inutile pour l'instant
 
 ### Bases de Git : commit, push, pull (Git)
 - Domaine : général
