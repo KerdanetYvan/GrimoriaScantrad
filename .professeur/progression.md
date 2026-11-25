@@ -44,9 +44,9 @@
 
 ### Branches (Git)
 - Domaine : général
-- Statut : Confirmé
-- Mis à jour : 2026-11-05
-- Indice : a créé `feat/backend-scaffold` avec la commande fournie ; expliqué switch -c, point de départ, fichiers non commités ; après merge, a trouvé seul `-d` via `git branch -h` et expliqué juste -d vs -D, suppression locale OK ; suppression distante `git push -d origin <branche>` après 3 essais (ordre des arguments, origin/x pris pour un seul mot) ; notion de ref expliquée ; 2e cycle : a composé seul `git switch -c ci/add-api-tests`, puis `git branch -d ... && git push -d origin ...` après merge
+- Statut : Vu
+- Mis à jour : 2026-11-25
+- Indice : a créé `feat/backend-scaffold` avec la commande fournie ; expliqué switch -c, point de départ, fichiers non commités ; après merge, a trouvé seul `-d` via `git branch -h` et expliqué juste -d vs -D, suppression locale OK ; suppression distante `git push -d origin <branche>` après 3 essais (ordre des arguments, origin/x pris pour un seul mot) ; notion de ref expliquée ; 2e cycle : a composé seul `git switch -c ci/add-api-tests`, puis `git branch -d ... && git push -d origin ...` après merge ; 2026-11-25 (après 3 semaines de pause) : avait oublié `-u` et les deux commandes de suppression → redescendu à Vu
 
 ### Lire la synopsis d'une aide (`-h`, crochets, chevrons) (général)
 - Domaine : général
@@ -110,9 +110,9 @@
 
 ### Stash (Git)
 - Domaine : général
-- Statut : Vu
-- Mis à jour : 2026-11-05
-- Indice : bloqué par un switch (modifs locales) ; a proposé seul `git stash` (avec un `.` en trop) ; `pop` donné après 2 indices ; a choisi `apply` sans saisir la différence, puis après l'analogie de l'étagère a prédit juste l'effet sur `git stash list` (apply garde, pop vide) ; a vérifié puis nettoyé avec `drop && list` (sous-commandes nommées par moi)
+- Statut : Confirmé
+- Mis à jour : 2026-11-25
+- Indice : 2026-11-25 : a anticipé seul le besoin de stash avant de revenir sur master, enchaîné `switch && pull && stash pop` (refait l'erreur du chemin sans `push`) ; avant : bloqué par un switch (modifs locales) ; a proposé seul `git stash` (avec un `.` en trop) ; `pop` donné après 2 indices ; a choisi `apply` sans saisir la différence, puis après l'analogie de l'étagère a prédit juste l'effet sur `git stash list` (apply garde, pop vide) ; a vérifié puis nettoyé avec `drop && list` (sous-commandes nommées par moi)
 
 ### Workflow GitHub Actions : on, paths, jobs, steps, uses/run, defaults (GitHub Actions)
 - Domaine : spécifique
@@ -124,7 +124,7 @@
 - Domaine : spécifique
 - Statut : Vu
 - Mis à jour : 2026-11-05
-- Indice : a deviné seul que les jobs doivent partager une info via needs + if ; a écrit outputs (`${{ steps.filter.outputs.api }}`) et le `if` correct après explication des 3 maillons ; `permissions` donné en forme générale, a choisi `read` ; CI verte (detect 6s, test 15s)
+- Indice : a deviné seul que les jobs doivent partager une info via needs + if ; a écrit outputs (`${{ steps.filter.outputs.api }}`) et le `if` correct après explication des 3 maillons ; `permissions` donné en forme générale, a choisi `read` ; CI verte (detect 6s, test 15s) ; 2026-11-25 : cas « skip » vérifié sur la PR docs (test Required sauté, PR mergeable)
 
 ### Protection de branche : rulesets (GitHub)
 - Domaine : spécifique
