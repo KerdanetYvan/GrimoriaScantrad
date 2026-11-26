@@ -27,6 +27,7 @@ jobs:
             SECRET_KEY: ci-only-not-secret
             DATABASE_URL: postgres://grimoria:grimoria@localhost:5432/postgres_grimoria
             REDIS_URL: redis://localhost:6379/0
+            SUPABASE_URL: http://127.0.0.1:54321
         services:
             postgres_grimoria:
                 image: postgres:16

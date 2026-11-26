@@ -130,3 +130,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = env('REDIS_URL')
+
+SUPABASE_URL = env('SUPABASE_URL')
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "core.authentication.SupabaseJWTAuthentication",
+    ]
+}
