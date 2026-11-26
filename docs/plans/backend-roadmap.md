@@ -18,7 +18,7 @@ prouve qu'elle est **finie**, sans imposer le code : c'est à construire.
 - Fini : plus aucun secret dans `settings.py` ; `manage.py check` et les tests
   passent sur Postgres ; un `.env.example` documente les variables.
 
-## 3. Authentification Supabase
+## 3. Authentification Supabase ✅
 
 - But : reconnaître l'utilisateur à partir du jeton (JWT) émis par Supabase.
 - Fini : une requête avec un jeton valide est authentifiée, une requête sans

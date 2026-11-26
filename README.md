@@ -48,7 +48,7 @@ The API is being built step by step, following the
 
 - [x] Project scaffold, tests and CI
 - [x] Environment, PostgreSQL and Celery
-- [ ] Supabase authentication
+- [x] Supabase authentication
 - [ ] Teams, members and invites
 - [ ] Chapters and the production pipeline
 - [ ] Discord notifications

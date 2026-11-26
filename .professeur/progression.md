@@ -180,6 +180,24 @@
 - Mis à jour : 2026-11-25
 - Indice : a ajouté un service Postgres à la CI (pensait à une step) ; health check repris de la doc GitHub ; a compris qu'un service Redis était inutile pour l'instant
 
+### JWT : signature, JWKS, vérification (général)
+- Domaine : général
+- Statut : Vu
+- Mis à jour : 2026-11-25
+- Indice : pensait qu'un JWT était chiffré (« décrypter ») ; signé vs chiffré, secret partagé vs paire de clés, JWKS et `kid` expliqués ; Supabase local en ES256
+
+### Classe d'authentification DRF (DRF)
+- Domaine : spécifique
+- Statut : Vu
+- Mis à jour : 2026-11-25
+- Indice : a écrit core/authentication.py étape par étape (lecture en-tête, split Bearer, PyJWKClient, jwt.decode, SupabaseUser) ; perdu plusieurs fois (try/except inversé — code donné à tort, recadré ; noms classe/variable inversés ; return oublié) ; 401 vs 403 et `authenticate_header` découverts via le test rouge ; faux positif Pylance ; en fin de session : « j'ai rien compris de ce qu'on vient de faire » → vue d'ensemble à reprendre ; 2026-11-26 : après réexplication courte (401 = refus + type de ticket), a prédit juste 403 sans la méthode
+
+### Mock avec monkeypatch (pytest)
+- Domaine : spécifique
+- Statut : Vu
+- Mis à jour : 2026-11-26
+- Indice : a compris pourquoi ne pas appeler Supabase en test (CI) ; analogie du videur ; a écrit FakeKey + fausse fonction + setattr après plusieurs erreurs (tuple au lieu de dict, import datetime, setattr avec appel au lieu de la fonction, fonction hors du test, test sans assert qui passait, concat PHP `.`) ; test vert avec vraies assertions
+
 ### Bases de Git : commit, push, pull (Git)
 - Domaine : général
 - Statut : Déclaré
